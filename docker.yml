@@ -2,32 +2,49 @@
 - name: Install docker on Amazon linux and run httpd docker container
   hosts: webservers
   tasks:
+- name: Update the software package repository
+  yum:
+  name: ‘*’
+  update_cache: yes
+
+- name: Installing yum-utils package
+  yum:
+  name: “{{ item }}”
+  state: latest
+  with_items:
+  - yum-utils
+  - wget
 - name: Add Docker CE repo
   yum_repository:
-  	name: docker
-  	description: Docker YUM repo
-        baseurl: https://download.docker.com/linux/centos/7/x86_64/stable/
-        gpgcheck: no
+name: docker
+description: Docker YUM repo
+baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+gpgcheck: no
 - name: Install docker
-        package:
-             name: docker-ce-18.09.1-3.el7.x86_64
-             state: present
+ yum:
+  name: “{{ item }}”
+  state: latest
+  with_items:
+  - docker-ce 
+  - docker-ce-cli 
+  - containerd.io
+
 - name: Start and enable the Docker daemon
   service: name=docker state=started enabled=yes
 
 - name: Download  docker image
-  docker_image: 
-      name: httpd
-      image: httpd
-      tag: latest
-      source: pull
+  docker_image:
+name: httpd
+image: httpd
+tag: latest
+source: pull
 
 - name: Launch HTTPD Container
-  docker_container: 
-      name: httpd
-      image: httpd
-      exposed_ports:
-      - "80"
-      ports:
-      - "8888:80"
+  docker_container:
+name: httpd
+image: httpd
+exposed_ports:
+- "80"
+ports:
+- "8888:80"
 ...
