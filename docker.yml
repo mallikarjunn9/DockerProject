@@ -1,6 +1,6 @@
-me: Install docker on a Centos 7 machine
+---
+- name : Install docker on Amazon linux and run httpd docker container
   hosts: webservers
-  
   tasks:
 - name: Install pre-requisite packages
   yum:
