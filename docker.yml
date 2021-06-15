@@ -22,11 +22,19 @@
 - name: Start and enable the Docker daemon
   service: name=docker state=started enabled=yes
 
-- name: Create a redis container
-    docker_container:
+- name: Download  docker image
+  docker_image: 
       name: httpd
       image: httpd
-      state: started
+      tag: latest
+      source: pull
+
+- name: Launch HTTPD Container
+  docker_container: 
+      name: httpd
+      image: httpd
       exposed_ports:
-        - 8080
+      - "80"
+      ports:
+      - "8888:80"
 ...
