@@ -16,10 +16,10 @@
   - wget
 - name: Add Docker CE repo
   yum_repository:
-name: docker
-description: Docker YUM repo
-baseurl: https://download.docker.com/linux/centos/docker-ce.repo
-gpgcheck: no
+- name: docker
+  description: Docker YUM repo
+  baseurl: https://download.docker.com/linux/centos/docker-ce.repo
+  gpgcheck: no
 - name: Install docker
  yum:
   name: “{{ item }}”
