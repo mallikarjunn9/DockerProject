@@ -1,8 +1,8 @@
 ---
-- name : Install docker on Amazon linux and run httpd docker container
+- name: Install docker on Amazon linux and run httpd docker container
   hosts: webservers
   tasks:
-- name: Install pre-requisite packages
+- name: Install prerequisite packages
   yum:
    name: "{{item}}"
    state: latest
